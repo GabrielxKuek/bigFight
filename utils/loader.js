@@ -42,6 +42,56 @@ export const load = {
               },
           })
 
+        loadSprite("knight", "./assets/Warrior_Red.png", {
+          sliceX: 6,
+          sliceY: 8,
+          anims: {
+            idle: {
+              from: 0,
+              to: 5,
+              loop: true
+            },
+            walk: {
+              from: 6,
+              to: 11,
+              loop: true
+            },
+            attack: {
+              from: 12,
+              to: 17,
+              loop: true
+            },
+          }
+        })
+        // loadSprite("politician", "./assets/politician.png", {
+        //   sliceX: 23,
+        //   sliceY: 1,
+        //   anims: {
+        //     idle: {
+        //       from: 0,
+        //       to: 7,
+        //       loop: true
+        //     },
+        //     walk: {
+        //       from: 0,
+        //       to: 14,
+        //       loop: true
+        //     },
+        //     attack: {
+        //       from: 0,
+        //       to: 14,
+        //       loop: true
+        //     },
+        //   }
+        // })
+
+
+        // non entities
+        loadSprite("goblinHouse", "./assets/Goblin_House.png")
+        loadSprite("humanHouse", "./assets/Tower_Red.png")
+        loadSprite("humanHouse-destroyed", "./assets/Tower_Destroyed.png")
+        loadSprite("goblinHouse-destroyed", "./assets/Goblin_House_Destroyed.png")
+
     }
 
 }

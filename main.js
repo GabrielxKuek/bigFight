@@ -11,9 +11,28 @@ import { level1Layout, level1Mappings } from "./levels/level1/level1.js"
 
 kaboom()
 
-function movement() {
-    const direction = vec2(1,0)
-    const speed = 1.5
+let speed = 10
+let summonTime = 10
+
+// let pCheck = true
+// let qCheck = true
+
+function qPress () {
+    onKeyPress("q", () => {
+        summonAlly(summonTime)
+    })
+    
+}
+
+function pPress () {
+    onKeyPress("p", () => {
+        summonEnemy(summonTime)
+    })
+    
+}
+
+
+function movement(direction, speed) {
 
     return {
         update() {
@@ -22,26 +41,124 @@ function movement() {
                 return
             }
 
+            if (!this.checkVal) {
+                return;
+            }
             this.pos.x += direction.x * speed
 
         }
     }
 }
 
-function summon() {
-    let entity = add([
-        sprite("entity", {anim: "walk"}),
-        pos(0, 450),
-        area(),
-        body(),
-        movement(),
-        "entity",
-    ])
+
+async function attackTimer(time, ally, enemy) {
+    
+    while (ally.health > 0 && enemy.health > 0) {
+        await wait(time)
+        enemy.health -= ally.damage
+        ally.health -= enemy.damage
+    }
+}
+
+let pCheck = true
+let qCheck = true
+
+function summonAlly(ms) {
+    if (qCheck) {
+        let goblin = add([
+            sprite("entity", {anim: "walk"}),
+            pos(0, 460),
+            area({ scale: 0.3, offset: vec2(250, 200), collisionIgnore: ["ally"]}),
+            body(),
+            movement(vec2(1,0), speed),
+            z(2),
+            {
+                health: 80,
+                damage: 40,
+                checkVal: true
+            },
+            "ally",
+        ])
+
+        qCheck = false
+        setTimeout(() => {
+            qCheck = true
+        }, ms)
+    }
+}
+
+function summonEnemy(ms) {
+    if (pCheck) {
+        let knight = add([
+            sprite("knight", {anim: "walk"}),
+            pos(1300, 460),
+            area({ scale: 0.3, offset: vec2(250, 200), collisionIgnore: ["enemy"]}),
+            body(),
+            movement(vec2(-1,0), speed),
+            z(2),
+            {
+                health: 100,
+                damage: 100 / 3,
+                checkVal: true
+            },
+            "enemy",
+        ])
+
+        knight.flipX = true
+
+        pCheck = false
+        setTimeout(() => {
+            pCheck = true
+        }, ms)
+    }
 }
 
 load.assets()
 
+// load scenes
+
 const scenes = {
+    victory: () => {
+        add([
+            sprite("bg"),
+            scale(4)
+        ])
+        add([
+            text("GOBLINS WIN! \nWOOHOOOOO"),
+            scale(2),
+            pos( width() / 3, height() / 2)
+        ])
+        add([
+            text("Press Enter to go to Main Menu"),
+            scale(0.5),
+            pos( width() / 3, height() / 2 + 200)
+        ])
+
+        onKeyPress("enter", () => {
+            go("menu")
+        })
+    },
+
+    loser: () => {
+        add([
+            sprite("bg"),
+            scale(4)
+        ])
+        add([
+            text("KNIGHT WIN\n~\\(≧▽≦)/~"),
+            scale(2),
+            pos( width() / 3, height() / 2)
+        ])
+        add([
+            text("Press Enter to go to Main Menu"),
+            scale(0.5),
+            pos( width() / 3, height() / 2 + 200)
+        ])
+
+        onKeyPress("enter", () => {
+            go("menu")
+        })
+    },
     menu: () => {
         UIManager.displayMainMenu()
     },
@@ -50,13 +167,78 @@ const scenes = {
 
     },
 
-    1: () => {
-        // init 
+    "pvp": () => {
 
+
+        // press once every 4 seconds
+
+        pPress()
+        qPress()
+
+
+        // init 
         add([
             sprite("bg"),
             scale(4)
         ])
+
+        
+        const level1 = new Level()
+        level1.drawMapLayout(level1Layout, level1Mappings)
+
+        const allyTower = add([
+            sprite("goblinHouse"),
+            pos(50, 370),
+            area(),
+            scale(1.5),
+            {
+                health: 1000,
+                damage: 0
+            },
+            z(2),
+            "allyTower"
+        ]);
+
+        // display health
+        // let allyHealthTower = add([
+        //     {
+        //         curr_health: 1000
+        //     },
+        //     text(`${curr_health} / ${allyTower.health}`),
+        //     scale(1),
+        //     pos( 50, 20)
+        // ])
+
+        // onUpdate((allyTower) => {
+        //     allyTower.curr_health = 
+        // }) 
+
+        const enemyTower = add([
+            sprite("humanHouse"),
+            pos(1300, 275),
+            area(),
+            scale(1.5),
+            {
+                health: 1000,
+                curr_health: 1000,
+                damage: 0
+            },
+            z(2),
+            "enemyTower"
+        ])
+
+        // display health
+        // let enemyTowerHealth = add([
+        //     text(`${allyTower.curr_health} / ${allyTower.health}`),
+        //     scale(2),
+        //     pos( 1300, 500)
+        // ])
+
+
+        // add([
+        //     text(enemyTower.health + " / 5000"),
+        //     pos(enemyTower., enemyTower. - 100)
+        // ])
 
         // entity test
 
@@ -69,13 +251,136 @@ const scenes = {
         //     "entity",
         // ])
 
-        onKeyDown("space", () => {
-            summon()
+        
+
+        // ally enemy collide
+        onCollide("ally", "enemy", (ally, enemy) => {
+            if (ally.curAnim() !== "attack") 
+                ally.play("attack")
+            if (enemy.curAnim() !== "attack") 
+                enemy.play("attack")
+
+                attackTimer(1, ally, enemy)
+
         })
-    
-        // level init
-        const level1 = new Level()
-        level1.drawMapLayout(level1Layout, level1Mappings)
+
+        onCollideUpdate("ally", "enemy", (ally, enemy) => {
+
+            if (enemy.health <= 0)
+                destroy(enemy)
+            if (ally.health <= 0) 
+                destroy(ally)
+        })
+
+        onCollideEnd("ally", "enemy", (ally, enemy) => {
+            if (ally.curAnim() !== "walk") 
+                ally.play("walk")
+            if (enemy.curAnim() !== "walk") 
+                enemy.play("walk")
+        })
+
+        // tower attack
+        onCollide("ally", "enemyTower", (a, t) => {
+            a.checkVal = false
+
+            if (a.curAnim() !== "attack") 
+                a.play("attack")
+
+            attackTimer(1, a, t);
+
+            // enemyTowerHealth = 
+            // enemyTower.curr_health = enemyTower.curr_health - 40;
+        })
+
+        onCollideUpdate("ally", "enemyTower", (a, t) => {
+            add([
+                text(enemyTower.health + " / 1000")
+            ])
+
+            if (t.health <= 0) {
+                add([
+                    sprite("humanHouse-destroyed"),
+                    scale(1.5),
+                    pos(enemyTower.pos.x, enemyTower.pos.y)
+                ])
+                destroy(enemyTower)
+                go("victory")
+            }
+        })
+        
+        onCollide("enemy", "allyTower", (e, t) => {
+            e.checkVal = false
+
+            if (e.curAnim() !== "attack") 
+                e.play("attack")
+
+            attackTimer(1, e, t)
+            // allyTower.curr_health = allyTower.curr_health - (100 / 3);
+        })
+
+        onCollideUpdate("enemy", "allyTower", (e, t) => {
+
+            if (t.health <= 0) {
+                add([
+                    sprite("goblinHouse-destroyed"),
+                    scale(1.5),
+                    pos(allyTower.pos.x, allyTower.pos.y)
+                ])
+                destroy(allyTower)
+                go("loser")
+            }
+
+        })
+
+        // Ui
+        add([
+            pos(15, 50),
+            rect(250, 140),
+            outline(4),
+            area(),
+        ])
+        add([
+            sprite("entity", {
+                anim: "idle"
+            }),
+            pos(0 + 50,0),
+            area({ scale: 0.3, offset: vec2(250, 200) }),
+        ])
+        add([
+            text("Press Q to summon Goblin"),
+            pos(0 + 20, 150),
+            scale(0.5),
+            color(0,0,0)
+        ])
+        
+        // div //
+
+        
+        add([
+            pos(width() - 285, 50),
+            rect(250, 140),
+            outline(4),
+            area(),
+        ])
+        add([
+            sprite("knight", {
+                anim: "idle"
+            }),
+            pos(width() - 250,0),
+            area({ scale: 0.3, offset: vec2(250, 200) })
+
+        ])
+        add([
+            text("Press P to summon Knight"),
+            pos(width() - 280, 150),
+            scale(0.5),
+            color(0,0,0)
+        ])
+
+    },
+
+    1: () => {
+        
     }
 }
 
@@ -84,4 +389,4 @@ for (const key in scenes) {
     scene(key, scenes[key])
 }
 
-go(1)
+go("menu")

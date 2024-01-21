@@ -51,7 +51,7 @@ class UI {
         )
 
         onKeyPress("enter", () => {
-            go(1)
+            go("pvp")
         })
     }
 }

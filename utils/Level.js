@@ -1,5 +1,5 @@
 export class Level {
-  
+
     drawMapLayout(levelLayout, mappings) {
     const layerSettings = {
       tileWidth: 12,

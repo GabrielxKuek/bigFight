@@ -4,50 +4,48 @@ export function generateMappings() {
     return {
         "0": () => [
             sprite(`tileset`, { anim: "tl" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "1": () => [
             sprite(`tileset`, { anim: "tm" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "2": () => [
             sprite(`tileset`, { anim: "tr" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "3": () => [
             sprite(`tileset`, { anim: "ml" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "4": () => [
             sprite(`tileset`, { anim: "mm" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "5": () => [
             sprite(`tileset`, { anim: "mr" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "6": () => [
             sprite(`tileset`, { anim: "bl" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "7": () => [
             sprite(`tileset`, { anim: "bm" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
         ],
         "8": () => [
             sprite(`tileset`, { anim: "br" }),
-            area(),
+            area({ scale: 0.3 }),
             body({ isStatic: true })
-        ]
+        ],
     }
   }
-
-  
