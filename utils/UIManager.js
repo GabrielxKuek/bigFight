@@ -44,6 +44,15 @@ class UI {
             scale(4)
         ])
 
+        add([
+            text("BIG Fight", {
+                font: "gb"
+            }),
+            scale(3),
+            pos(center().x - 430, center().y - 100),
+            color( 0,0,0)
+        ])
+
         this.displayBlinkingUIMessage(
             "Press [ Enter ] to Start Game",
             vec2(center().x, center().y + 100),

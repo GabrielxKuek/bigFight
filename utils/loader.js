@@ -2,6 +2,8 @@ export const load = {
 
     // assets
     assets: () => {
+        loadFont("gb", "./assets/gb.ttf")
+
         loadSprite("bg", "./assets/bg1.png")
 
         loadSprite("tileset", "./assets/tileset.png", {

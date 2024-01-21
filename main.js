@@ -16,10 +16,15 @@ let summonTime = 10
 
 // let pCheck = true
 // let qCheck = true
+let clicksGob = 0
+let clicksKnight = 0
+let secs = 0
 
+// keypresses
 function qPress () {
     onKeyPress("q", () => {
         summonAlly(summonTime)
+        clicksGob++
     })
     
 }
@@ -27,6 +32,7 @@ function qPress () {
 function pPress () {
     onKeyPress("p", () => {
         summonEnemy(summonTime)
+        clicksKnight++
     })
     
 }
@@ -126,12 +132,14 @@ const scenes = {
         add([
             text("GOBLINS WIN! \nWOOHOOOOO"),
             scale(2),
-            pos( width() / 3, height() / 2)
+            pos( width() / 3, height() / 2),
+            color(0,0,0)
         ])
         add([
             text("Press Enter to go to Main Menu"),
             scale(0.5),
-            pos( width() / 3, height() / 2 + 200)
+            pos( width() / 3, height() / 2 + 200),
+            color(0,0,0)
         ])
 
         onKeyPress("enter", () => {
@@ -145,14 +153,16 @@ const scenes = {
             scale(4)
         ])
         add([
-            text("KNIGHT WIN\n~\\(≧▽≦)/~"),
+            text("KNIGHTS WIN\n~\\(≧▽≦)/~"),
             scale(2),
-            pos( width() / 3, height() / 2)
+            pos( width() / 3, height() / 2),
+            color(0,0,0)
         ])
         add([
             text("Press Enter to go to Main Menu"),
             scale(0.5),
-            pos( width() / 3, height() / 2 + 200)
+            pos( width() / 3, height() / 2 + 200),
+            color(0,0,0)
         ])
 
         onKeyPress("enter", () => {
@@ -179,6 +189,11 @@ const scenes = {
         // init 
         add([
             sprite("bg"),
+            scale(5)
+        ])
+
+        add([
+            sprite("bg"),
             scale(4)
         ])
 
@@ -192,7 +207,7 @@ const scenes = {
             area(),
             scale(1.5),
             {
-                health: 1000,
+                health: 300,
                 damage: 0
             },
             z(2),
@@ -219,7 +234,7 @@ const scenes = {
             area(),
             scale(1.5),
             {
-                health: 1000,
+                health: 300,
                 curr_health: 1000,
                 damage: 0
             },
@@ -293,9 +308,6 @@ const scenes = {
         })
 
         onCollideUpdate("ally", "enemyTower", (a, t) => {
-            add([
-                text(enemyTower.health + " / 1000")
-            ])
 
             if (t.health <= 0) {
                 add([
@@ -304,7 +316,10 @@ const scenes = {
                     pos(enemyTower.pos.x, enemyTower.pos.y)
                 ])
                 destroy(enemyTower)
-                go("victory")
+                shake(50)
+                setTimeout(() => {
+                    go("victory")
+                }, 1000)
             }
         })
         
@@ -327,10 +342,30 @@ const scenes = {
                     pos(allyTower.pos.x, allyTower.pos.y)
                 ])
                 destroy(allyTower)
-                go("loser")
+                shake(50)
+                setTimeout(() => {
+                    go("loser")
+                }, 1000)
             }
 
         })
+
+        // cps
+
+        function test() {
+            setTimeout(() => {
+                add([
+                    text("ttt"),
+                    pos(12, 12),
+                    area(),
+                    "popup"
+                ])
+            }, Math.floor(Math.random() * (5000 - 2000) + 2000))
+        
+            onClick("popup", () => {
+                destroy("popup")
+            })
+        }
 
         // Ui
         add([
@@ -352,6 +387,32 @@ const scenes = {
             scale(0.5),
             color(0,0,0)
         ])
+        
+
+        function test() {
+            setTimeout(() => {
+                secs++
+                add([
+                    text("Clicks per Second: " + Math.round(clicksGob / secs * 10) / 10),
+                    pos(0 + 20, 200),
+                    scale(0.5),
+                    color(0,0,0),
+                    "cps"
+                ])
+                add([
+                    text("Clicks per Second: " + Math.round(clicksKnight / secs * 10) / 10),
+                    pos(width() - 280, 200),
+                    scale(0.5),
+                    color(0,0,0),
+                    "cps"
+                ])
+            }, 1)
+        }
+        
+        loop(2, () => {
+            test()
+            destroyAll("cps")
+        });
         
         // div //
 
