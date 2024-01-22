@@ -15,6 +15,6 @@ Our original plan was to create a game like **Battle Cats** with a added twist o
 
 ## Authors
 **Kuek Guan Jie Gabriel** <br>
-**Min Thet Khine** (Github: ProjektKevin) <br>
-**Goh Pin Pin Isaac** (Github: PinPinMan) <br>
-**Kaung Ye Myint Mo** (Github: kaungyemyintmo)
+**Min Thet Khine** (Github: <a href="https://github.com/ProjektKevin">ProjektKevin</a>) <br>
+**Goh Pin Pin Isaac** (Github: <a href="https://github.com/PinPinMan">PinPinMan</a>) <br>
+**Kaung Ye Myint Mo** (Github: <a href="https://github.com/kaungyemyintmo">kaungyemyintmo</a>)
