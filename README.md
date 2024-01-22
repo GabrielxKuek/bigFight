@@ -16,7 +16,7 @@ We used a lesser known library, called **Kaboom** to create the entirety of the 
 Our original plan was to create a game like **Battle Cats** with a added twist on it. It was supposed to be palyable by other members instead of just palying against computer. However, due to our ambitious goal and limtied time and resources, we decided to save the idea for next time.
 
 ## Authors
-Kuek Guan Jie Gabriel
-Min Thet Khine (Github: ProjektKevin)
-Goh Pin Pin Isaac (Github: PinPinMan)
+Kuek Guan Jie Gabriel <br>
+Min Thet Khine (Github: ProjektKevin) <br>
+Goh Pin Pin Isaac (Github: PinPinMan) <br>
 Kaung Ye Myint Mo (Github: kaungyemyintmo)
