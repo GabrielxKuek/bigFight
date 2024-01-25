@@ -5,7 +5,7 @@ In the world of **Big Fight**, there once co-existed two races: goblins and huma
 Immerse yourself into a world of strategy and muscle cramps where the only thing between you and victory is your finger muscles. In this game, every click sends out one troop to the other tower, where they fight to eradicate the world of the enemy tower's existence. 
 
 ## Overview
-We created this project during NUS Hack & Roll (2024). It was a 24 hours hackathon in which we had the avaliblity to choose any topics we want with several prises prices to win. The project is a Click Per Second (CPS) tester that allows two person to test it. Since normal CPS testers websites only allow a singal user to test at the same time, the latter tester always have the slight edge on the first one. Since the latter tester have a goal to aim. Therefore, to tackle this issue, we created **Big Fight**.
+We created this project during NUS Hack & Roll (2024). It was a 24 hours hackathon in which we had the avaliblity to choose any topics we want with several prises prices to win. The project is a Click Per Second (CPS) tester that allows two person to test it. Since normal CPS testers websites only allow a single user to test at the same time, the latter tester always have the slight edge on the first one. Since the latter tester have a goal to aim. Therefore, to tackle this issue, we created **Big Fight**.
 
 ## How we did it
 We used a lesser known library, called **Kaboom** to create the entirety of the project with bare minimum **HTML** to present in the website.
