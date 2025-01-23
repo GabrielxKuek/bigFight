@@ -1,4 +1,7 @@
 # BIG FIGHT
+
+[try it out!](https://gabrielxkuek.itch.io/big-fight-click-speed-testing)
+
 ## Story
 In the world of **Big Fight**, there once co-existed two races: goblins and humans. They weren't particurally friendly to each other as there has been a few disputes between each other over the decades. And the intention reached its peak when the two nations built their bases very close to each other. Thus, the start of **Big Fight** begun. Whoever destroy the other's base first will be delcared the winner!!
 <br>
